@@ -9,9 +9,17 @@ function isEmail(email){
 }
 
 $(document).ready(function() {
-    // Restrict phone input to digits only
+    // Restrict phone input to digits only and max 10 digits
     $("#phone").on("input", function() {
-        this.value = this.value.replace(/[^\d]/g, '');
+        this.value = this.value.replace(/[^\d]/g, '').slice(0, 10);
+    });
+
+    // Toggle password visibility
+    $("#togglePassword").on("click", function() {
+        var pwd = $("#password");
+        var type = pwd.attr("type") === "password" ? "text" : "password";
+        pwd.attr("type", type);
+        $(this).text(type === "password" ? "Show" : "Hide");
     });
 
     // On submit button click, validate form fields

@@ -20,6 +20,11 @@ input{
     padding: 5px 12px 5px 5px;
     margin-bottom: 10px;
 }
+.input-eye-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
 #submit{
     width: 130px;
     margin-left: 200px;
@@ -31,4 +36,12 @@ input{
 #success{
     color: green;
     font-size: 90%;
+}
+.eye-icon {
+    cursor: pointer;
+    vertical-align: middle;
+    width: 22px;
+    height: 22px;
+    margin-left: -30px;
+    margin-bottom: 10px;
 }

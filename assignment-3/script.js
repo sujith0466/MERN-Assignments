@@ -7,6 +7,12 @@ function isEmail(email){
     var regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return regex.test(email);
 }
+// Function to validate password strength
+function isStrongPassword(pwd) {
+    // 8-15 chars, at least 1 uppercase, 1 lowercase, 1 special char
+    var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,15}$/;
+    return regex.test(pwd);
+}
 
 $(document).ready(function() {
     // Restrict phone input to digits only and max 10 digits
@@ -33,7 +39,8 @@ $(document).ready(function() {
     $("#submit").click(function(event) {
         errormess = ""; 
         missingfield="";
-        
+        $("#success").html("");
+        $("#error").html("");
         // Check for required fields
         if ($("#email").val() === "") {
             missingfield += "<p>Email is required.</p>";
@@ -44,28 +51,31 @@ $(document).ready(function() {
         if ($("#password").val() === "") {
             missingfield += "<p>Password is required.</p>";
         }
-        
         // Validate email format
         if(isEmail($("#email").val()) == false){
             errormess += "<p>Please enter a valid email address.</p>";
         }
-        
         // Validate phone number length
         if($("#phone").val().length < 10){
-            errormess += "Phone number must be at least 10 digits.\n";
+            errormess += "<p>Phone number must be at least 10 digits.</p>";
         }
-        
         // Validate password match
         if($("#password").val() !== $("#confirmpassword").val()){
-            errormess += "Passwords do not match.\n";
+            errormess += "<p>Passwords do not match.</p>";
         }
-        
+        // Validate password strength
+        var pwdVal = $("#password").val();
+        if(pwdVal && !isStrongPassword(pwdVal)){
+            errormess += "<p>Password must be 8-15 characters, include at least one uppercase letter, one lowercase letter, and one special character.</p>";
+        }
         // Show success or error messages
-        if (errormess == "") {
+        if (errormess === "" && missingfield === "") {
             $("#success").html("<p>Form submitted successfully!</p>");
-        }    
-        else {
-            $("#error").html("<p>" + errormess + missingfield+ "</p>");
+            $("#error").html("");
+        } else {
+            $("#success").html("");
+            $("#error").html(errormess + missingfield);
+            event.preventDefault();
         }
     });
 });

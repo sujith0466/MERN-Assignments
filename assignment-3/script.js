@@ -14,12 +14,19 @@ $(document).ready(function() {
         this.value = this.value.replace(/[^\d]/g, '').slice(0, 10);
     });
 
-    // Toggle password visibility
+    // Toggle password visibility for password field
     $("#togglePassword").on("click", function() {
         var pwd = $("#password");
         var type = pwd.attr("type") === "password" ? "text" : "password";
         pwd.attr("type", type);
-        $(this).text(type === "password" ? "Show" : "Hide");
+        $(this).attr("src", type === "password" ? "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/eye.svg" : "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/eye-slash.svg");
+    });
+    // Toggle password visibility for confirm password field
+    $("#toggleConfirmPassword").on("click", function() {
+        var pwd = $("#confirmpassword");
+        var type = pwd.attr("type") === "password" ? "text" : "password";
+        pwd.attr("type", type);
+        $(this).attr("src", type === "password" ? "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/eye.svg" : "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/eye-slash.svg");
     });
 
     // On submit button click, validate form fields
@@ -40,7 +47,7 @@ $(document).ready(function() {
         
         // Validate email format
         if(isEmail($("#email").val()) == false){
-            errormess += "Please enter a valid email address.\n";
+            errormess += "<p>Please enter a valid email address.</p>";
         }
         
         // Validate phone number length

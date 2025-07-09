@@ -1,0 +1,622 @@
+/* ========================================
+   GLOBAL STYLES
+   ======================================== */
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html,body{
+    background-color: #ffffff;
+    color: #161515;
+    font-family:Lato,sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+.row{
+    max-width: 1140px;
+    margin: 0 auto;
+}
+/* ========================================
+   HEADER & NAVIGATION
+   ======================================== */
+
+header{
+    background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(img/food-img.webp);
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+}
+h1{
+    margin-top: 0px;
+    margin-bottom: 20px;
+    padding: 0;
+    color: #ffffff;
+    font-size: 240%;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    word-spacing: 5px;
+}
+.hero-text-box{
+    position: absolute;
+    width: 1140px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.btn:link,.btn:visited,
+input[type=submit]{
+    display: inline-block;
+    padding: 10px 30px;
+    text-decoration: none;
+    font-weight: 300;
+    border-radius: 200px;
+    transition: background-color 0.2s, border 0.2s, color 0.2s;
+}
+.btn-full:link, .btn-full:visited,
+input[type=submit]{
+    background-color: #e67e22;
+    color: #ffffff;
+    border: 1px solid black;
+    margin-right: 25px;
+    border-radius:200px ;
+}
+.btn-ghost:visited, .btn-ghost:link{
+    border: 1px solid #e67e22;
+    color: #e67e22;
+    border-radius: 200px;
+}
+.btn:hover,.btn:active,
+input[type=submit]{
+    background-color: rgb(255, 125, 4)
+}
+.btn-ghost:hover, .btn-ghost:active{
+    border: 1px solid rgb(255, 125, 4);
+    color: wheat;
+}
+.btn-full:hover, .btn-full:active,
+input[type=submit ]{
+    border: 1px solid rgb(177, 88, 4);
+    color: rgb(255, 255, 255);
+}
+.row{
+    max-width: 1140px;
+    margin: 0 auto;
+    position: relative;
+}
+.logo{
+    border-radius: 50%;
+    width: 10%;
+    height: 80px;
+    float:inline-start;
+    margin-top: 10px; 
+    margin-left: -100px;
+}
+.main-nav{
+    float: right;
+    list-style: none;
+    margin-top: 0px;
+}
+.main-nav li{
+    display: inline-block;
+    margin-left: 20px;
+    
+}
+.main-nav li a {
+    color: #fff;
+    padding: 0 20px;
+    margin-right: 10px;
+    text-transform: uppercase;
+    font-size:  90%;
+    text-decoration: none;
+    font-weight: 600;
+    transition: border-bottom 0.2s, color 0.2s;
+}
+.main-nav li a:hover, .main-nav li a:active {
+    color: #fff;
+    border-bottom:3px solid black ;
+
+}
+section{
+    padding: 50px 0;
+    background-color: #f4f4f4;
+    min-height: auto;
+}
+h2{
+    font-weight: 500;
+    font-size: xx-large;
+    text-transform: uppercase;
+    word-spacing: 3px;
+    text-align: center;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+    margin-top: 30px ;
+    margin-left: 100px;
+}
+h2::after
+{
+    display: block;
+    height: 2px;
+    background-color: #e67e22;
+    content: "";
+    width: 100px;
+    margin: 0 auto;
+    margin-top: 30px;
+    justify-content: center;
+}
+h2::after
+{
+    display: block;
+    height: 2px;
+    background-color: #e67e22;
+    content: "";
+    width: 100px;
+    margin: 0 auto;
+    margin-top: 30px;
+    justify-content: center;
+}
+/* ========================================
+   SECTION: FEATURES
+   ======================================== */
+
+.long-copy{
+    width: 70%;
+    margin-left:15%;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 20px;
+}
+.features-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 1em;
+    width: 100%;
+    margin: 0 auto;
+    max-width: 1140px;
+}
+.box {
+    flex: 1 1 22%;
+    min-width: 220px;
+    max-width: 25%;
+    background-color: #fff;
+    padding: 2em 1.5em;
+    margin-top: 2.5em;
+    border-radius: 1em;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+    margin-bottom: 1.25em;
+    min-height: 22em;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.box:hover{
+
+    box-shadow: 0 10px 10px rgba(0,0,0,0.4);
+    transition: box-shadow 0.4s ease-in-out;
+
+}
+h3{
+    font-size:larger;
+    padding: 10px 0;
+}
+.box p{
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 20px;
+
+}
+.icon-big {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    color: #924a0a;
+    margin-right: 10px;
+}
+@media (max-width: 900px) {
+    .features-row {
+        flex-direction: column;
+        gap: 0.75em;
+        max-width: 95vw;
+    }
+    .box {
+        max-width: 100%;
+        min-width: 0;
+        width: 100%;
+        margin-top: 1em;
+    }
+}
+.meals-showcase {
+    list-style: none;
+    width: 100%;
+
+}
+.meals-showcase li {
+    display: block;
+    float: left;
+    width: 25%;
+    padding: 1em 0; /* uniform vertical space between rows */
+}
+/* Clearfix: ensures parent contains floated children */
+
+.clearfix{zoom:1}
+.clearfix::after {
+    content: "";
+    display: block;
+    clear: both;
+    height: 0;
+    visibility: hidden;   
+}
+/* ========================================
+   SECTION: MEALS
+   ======================================== */
+
+.meal-photo{
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
+    transition: transform 0.5s, opacity 0.5s;
+}
+.meal-photo img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 8;
+    object-fit: cover;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    margin:0;
+    padding:0; /* uniform vertical and horizontal space */
+    display: block;
+    opacity: 0.7 black;
+}
+.meal-photo img:hover {
+    transform: scale(1.05);
+    opacity: 1;
+}
+.section-meals{
+    padding: 0;
+}
+/* Clearfix: ensures parent contains floated children */
+
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* ========================================
+   SECTION: HOW IT WORKS (STEPS)
+   ======================================== */
+
+.works-step{
+    margin-bottom: 40px;  
+    margin-right: 25px; 
+}
+.works-step p{
+    text-align: center;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 20px;
+}
+.steps-box:first-child{
+    padding-right: 3%;
+    margin-top: 30px;
+}
+.steps-box:last-child{
+    padding-left: 3%;
+    margin-top: 70px;
+}
+.app-phone{
+    width: 80%;
+    overflow: hidden;
+    margin: 0 auto;
+    position: relative;
+    margin-top: 50px;
+    box-shadow:  10px 10px 5px #aaaaaa;
+}
+.works-step div{
+    color: #e67e22;
+    border: 4px solid #e67e22;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    text-align: center;
+    padding: 5px;
+    font-size: 150%;
+    margin-right: 25px;
+}
+.section-steps {
+  margin-bottom: 10px;
+  padding-bottom: 10px; /* Ensures clean space before next section */
+}
+
+.btn-app img{
+    height: 50px;
+    width: auto;
+    margin-right: 10px;
+    margin-bottom: 80px;
+}
+.btn-app:link,.btn-app:visited{
+    border: 0;
+}
+.box img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+}
+/* Clearfix: ensures parent contains floated children */
+
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* ========================================
+   SECTION: CITIES
+   ======================================== */
+
+.city-feature {
+  margin-bottom: 5px;
+}
+
+.icon-small {
+  display: inline-block;
+  width: 30px;
+  text-align: center;
+  color: #e67e22;
+  font-size: 120%;
+  line-height: 120%;
+  vertical-align: middle;
+  margin-top: -5px; /* ✅ FIXED: removed space between -5 and px */
+  margin-right: 10px;
+}
+
+a:link,
+a:visited {
+  color: #e67e22;
+  text-decoration: none;
+  border-bottom: 1px solid black;
+  padding-bottom: 1px;
+}
+
+a:hover {
+  color: #555;
+  border-bottom: 1px solid transparent;
+}
+
+.section-cities {
+  margin-bottom: 20px;
+  padding: 10px;
+}
+/* Clearfix: ensures parent contains floated children */
+
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* ========================================
+   SECTION: TESTIMONIALS
+   ======================================== */
+
+.section-testimonials {
+  padding: 0;
+  margin-top: 20px;
+}
+
+.testimonial-content {
+  background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('img/backcust.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: 20px 0;
+  height: 80vh;
+  color: #fff;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.section-testimonials h2 {
+  font-size: 2rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+  font-weight: 600;
+}
+
+.section-testimonials h2::after {
+  content: "";
+  display: block;
+  width: 100px;
+  height: 2px;
+  background-color: #e67e22;
+  margin: 30px auto 0;
+}
+
+blockquote {
+  font-style: italic;
+  margin: 20px;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  position: relative;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgb(255, 255, 255);
+  min-height: 160px;
+}
+
+blockquote cite {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  font-style: normal;
+  font-weight: bold;
+  color: #f39c12;
+}
+
+blockquote cite img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  border: 2px solid #fff;
+  object-fit: cover;
+}
+/* Clearfix: ensures parent contains floated children */
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* ========================================
+   SECTION: PLANS
+   ======================================== */
+.section-plans{
+    background-color: #fff;
+} 
+.section-plans h2{
+    text-decoration:dotted;
+}
+.plan-box{
+    background-color: #fff;
+    border-radius: 5px;
+    width: 90%;
+    margin-left: 5%;
+}
+.plan-box div{
+    padding: 15px;
+    border-bottom:1px solid #e8e8e8 ;
+}
+.plan-price{
+    font-size:300% ;
+    margin-bottom: 10px;
+    font-weight: 300;
+    color: #e67e22;
+}
+.plan-price-meal{
+    font-size: 90%;
+}
+.plan-price span{
+    font-size: 30%;
+    font-weight: 400;
+}
+.plan-box ul{
+    list-style: none;
+
+}
+.plan-box li{
+    padding: 5px 0;
+}
+.plan-box div:last-child{
+    border: 0;
+    text-align: center;
+}
+.plan-box div:first-child{
+    background-color: #fcfcfc;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px; 
+}
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* ========================================
+   SECTION: FORM
+   ======================================== */
+.contact-form{
+    width: 70%;
+    margin: 0 auto;
+    font-size:large;
+    height: 60vh;
+}
+input[type=text],
+input[type=email],
+select,
+textarea{
+    width: 100%;
+    padding: 7px;
+    border-radius: 3px;
+    border: 1px solid #fff;
+}
+textarea{
+    height: 100%;
+}
+input[type=checkbox]{
+    padding: 10px 5px 10px 0;
+}
+.section-form{
+    padding-bottom: 0px;
+    margin-bottom: 10px;
+}
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* ========================================
+   FOOTER SECTION
+   ======================================== */
+footer{
+    background-color: #333;
+    font-size: 80%;
+    padding: 50px;
+}   
+.footer-nav{
+    list-style: none;
+    float: left;
+
+}
+.social-links{
+    list-style: none;
+    float: right;
+}
+.footer-nav li,
+.social-links li{
+    display: inline-block;
+    margin: 20px;
+}
+.footer-nav li a:link,
+.footer-nav li a:visited,
+.social-links li a:link,
+.social-links li a:visited{
+    text-decoration: none;
+    border: 0;
+    color: #888;
+}
+.footer-nav li a:hover,
+.footer-nav li a:hover{
+    color: #ddd;
+}
+footer p{
+    color: #888;
+    text-align: center;
+    font-size: 90%;
+    margin-top: 20px;
+}
+.fb:hover{
+    color: #3b5998;
+}
+.google:hover{
+    color: #dd4b39;
+}
+.twitter:hover{
+    color: #00aced;
+}
+.ig:hover{
+    color: #517fa4;
+}
+.social-links li a:link,
+.social-links li a:visited{
+    font-size: 160%;
+}

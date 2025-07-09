@@ -1,0 +1,186 @@
+/* Max width: 1200px (Large tablets and laptops) */
+@media only screen and (max-width: 1200px) {
+}
+
+/* Max width: 1024px (Tablets) */
+@media only screen and (max-width: 1024px) {
+  .logo {
+    margin-left: 0;
+  }
+
+  .main-nav {
+    float: none;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .main-nav li {
+    display: block;
+    margin: 10px 0;
+  }
+
+  .features-row,
+  .row {
+    flex-direction: column;
+    padding: 0 5%;
+  }
+
+  .box,
+  .plan-box {
+    max-width: 100%;
+    margin-left: 0;
+  }
+
+  .hero-text-box {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  h2 {
+    margin-left: 0;
+    text-align: center;
+  }
+}
+
+/* Max width: 767px (Mobile landscape) */
+@media only screen and (max-width: 767px) {
+  .hero-text-box {
+    width: 90%;
+    padding: 0 5%;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 180%;
+  }
+
+  .main-nav {
+    float: none;
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  .main-nav li {
+    display: inline-block;
+    margin: 0 10px;
+  }
+
+  .features-row {
+    flex-direction: column;
+  }
+
+  .box {
+    margin: 1em 0;
+  }
+
+  .meals-showcase li {
+    width: 50%;
+  }
+
+  .app-phone {
+    width: 90%;
+  }
+
+  .steps-box {
+    width: 100%;
+    padding: 0;
+    text-align: center;
+  }
+
+  .plan-box {
+    width: 100%;
+    margin: 1em 0;
+  }
+
+  .testimonial-content {
+    padding: 40px 10px;
+    height: auto;
+  }
+
+  blockquote {
+    font-size: 1rem;
+    padding: 10px;
+  }
+
+  .contact-form {
+    width: 90%;
+  }
+    .section-form .row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .section-form .col {
+    width: 100% !important;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  select,
+  textarea {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  input[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+  }
+
+  .section-form h2 {
+    text-align: center;
+    margin-left: 0; /* Remove left shift if applied globally */
+  }
+
+}
+
+/* Max width: 480px (Mobile portrait) */
+@media only screen and (max-width: 480px) {
+  h1 {
+    font-size: 140%;
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    margin-left: 0;
+    letter-spacing: 1px;
+  }
+
+  .main-nav li a {
+    padding: 8px 10px;
+    font-size: 85%;
+  }
+
+  .meals-showcase li {
+    width: 100%;
+  }
+
+  .box {
+    padding: 1em;
+  }
+
+  .plan-box {
+    padding: 10px;
+  }
+
+  .contact-form {
+    width: 100%;
+    height: 90vh;
+  }
+
+  .footer-nav,
+  .social-links {
+    float: none;
+    text-align: center;
+  }
+
+  .footer-nav li,
+  .social-links li {
+    display: block;
+    margin: 10px 0;
+  }
+}

@@ -1,0 +1,114 @@
+:root {
+  --bg-left: #e4d6f7;
+  --bg-right: #c2b2f0;
+  --card-bg: #ffffff;
+  --accent: #7e57c2;
+  --accent-dark: #673ab7;
+  --text: #222;
+  --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  --radius: 12px;
+  --font: 'Segoe UI', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  font-family: var(--font);
+  background: linear-gradient(to right, var(--bg-left), var(--bg-right));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 1rem;
+  color: var(--text);
+  font-size: 2rem;
+}
+
+.add-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.add-form input {
+  flex: 1;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: var(--radius);
+  border: 1px solid #ccc;
+}
+
+.add-form button {
+  padding: 0.75rem 1rem;
+  font-size: 1.5rem;
+  color: white;
+  background: var(--accent);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.add-form button:hover {
+  background: var(--accent-dark);
+}
+
+.todo-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.todo-list li {
+  background: #f9f9f9;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  box-shadow: var(--shadow);
+}
+
+.todo-list li.done span {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.todo-list form {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.todo-list input[type="checkbox"] {
+  transform: scale(1.2);
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: var(--accent-dark);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.delete-btn:hover {
+  transform: scale(1.3);
+}

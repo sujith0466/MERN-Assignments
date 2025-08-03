@@ -115,6 +115,24 @@ h1 {
   accent-color: var(--accent);
   cursor: pointer;
 }
+.completed .task-text {
+  text-decoration: line-through;
+  color: grey;
+}
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+form {
+  display: inline;
+}
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
 
 .delete-btn {
   background: none;

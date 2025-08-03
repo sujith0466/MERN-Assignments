@@ -21,6 +21,23 @@ app.post("/add", (req, res) => {
   res.redirect("/");
 });
 
+app.post('/edit/:index', (req, res) => {
+  const index = req.params.index;
+  todos[index].editing = true;
+  res.redirect('/');
+});
+
+app.post('/update/:index', (req, res) => {
+  const index = req.params.index;
+  const updatedTask = req.body.updatedTask.trim();
+  if (updatedTask) {
+    todos[index].task = updatedTask;
+    todos[index].editing = false;
+  }
+  res.redirect('/');
+});
+
+
 app.post("/toggle/:index", (req, res) => {
   const idx = parseInt(req.params.index);
   if (!isNaN(idx) && todos[idx]) {

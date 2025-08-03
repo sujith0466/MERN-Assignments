@@ -17,20 +17,31 @@
 
     <ul class="todo-list">
       <% todos.forEach((todo, index) => { %>
-        <li class="<%= todo.completed ? 'done' : '' %>">
-          <form action="/toggle/<%= index %>" method="POST">
-            <input type="checkbox" onchange="this.form.submit()" <%= todo.completed ? 'checked' : '' %> />
-            <% if (todo.editing) { %>
-  <form action="/update/<%= index %>" method="POST" class="edit-form">
-    <input type="text" name="updatedTask" value="<%= todo.task %>" required />
-    <button type="submit">💾</button>
-  </form>
-<% } else { %>
-  <span><%= todo.task %></span>
-  <form action="/edit/<%= index %>" method="POST" class="inline-form">
-    <button type="submit">✏️</button>
-  </form>
-<% } %>
+  <div class="task-item <%= todo.completed ? 'completed' : '' %>">
+    
+    <% if (todo.editing) { %>
+      <form action="/update/<%= index %>" method="POST" class="edit-form">
+        <input type="text" name="updatedTask" value="<%= todo.task %>" required />
+        <button type="submit" title="Save"><i class="fas fa-save"></i></button>
+      </form>
+    <% } else { %>
+      <form action="/toggle/<%= index %>" method="POST" class="toggle-form">
+        <button type="submit" title="Toggle Done"><i class="fas fa-check"></i></button>
+      </form>
+
+      <span class="task-text"><%= todo.task %></span>
+
+      <form action="/edit/<%= index %>" method="POST" class="edit-button-form">
+        <button type="submit" title="Edit"><i class="fas fa-pen"></i></button>
+      </form>
+    <% } %>
+
+    <form action="/delete/<%= index %>?_method=DELETE" method="POST" class="delete-form">
+      <button type="submit" title="Delete"><i class="fas fa-trash"></i></button>
+    </form>
+  </div>
+<% }); %>
+
 
           </form>
           <form action="/delete/<%= index %>?_method=DELETE" method="POST">

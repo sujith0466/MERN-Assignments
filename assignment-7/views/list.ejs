@@ -20,7 +20,18 @@
         <li class="<%= todo.completed ? 'done' : '' %>">
           <form action="/toggle/<%= index %>" method="POST">
             <input type="checkbox" onchange="this.form.submit()" <%= todo.completed ? 'checked' : '' %> />
-            <span><%= todo.task %></span>
+            <% if (todo.editing) { %>
+  <form action="/update/<%= index %>" method="POST" class="edit-form">
+    <input type="text" name="updatedTask" value="<%= todo.task %>" required />
+    <button type="submit">💾</button>
+  </form>
+<% } else { %>
+  <span><%= todo.task %></span>
+  <form action="/edit/<%= index %>" method="POST" class="inline-form">
+    <button type="submit">✏️</button>
+  </form>
+<% } %>
+
           </form>
           <form action="/delete/<%= index %>?_method=DELETE" method="POST">
             <button class="delete-btn" title="Delete Task">✕</button>

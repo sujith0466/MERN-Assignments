@@ -9,36 +9,42 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(methodOverride("_method"));
 
+// Show all todos
 app.get("/", (req, res) => {
   res.render("list", { todos });
 });
 
+// Add new task
 app.post("/add", (req, res) => {
   const { task } = req.body;
   if (task && task.trim()) {
-    todos.push({ task, completed: false });
+    todos.push({ task, completed: false, editing: false });
   }
   res.redirect("/");
 });
 
-app.post('/edit/:index', (req, res) => {
-  const index = req.params.index;
-  todos[index].editing = true;
-  res.redirect('/');
+// Enable edit mode (just sets flag)
+app.get("/edit/:index", (req, res) => {
+  const index = parseInt(req.params.index);
+  if (!isNaN(index) && todos[index]) {
+    todos[index].editing = true;
+  }
+  res.redirect("/");
 });
 
-app.post('/update/:index', (req, res) => {
-  const index = req.params.index;
+// Update task content
+app.put("/update/:index", (req, res) => {
+  const index = parseInt(req.params.index);
   const updatedTask = req.body.updatedTask.trim();
-  if (updatedTask) {
+  if (!isNaN(index) && updatedTask) {
     todos[index].task = updatedTask;
     todos[index].editing = false;
   }
-  res.redirect('/');
+  res.redirect("/");
 });
 
-
-app.post("/toggle/:index", (req, res) => {
+// Toggle complete/incomplete
+app.patch("/toggle/:index", (req, res) => {
   const idx = parseInt(req.params.index);
   if (!isNaN(idx) && todos[idx]) {
     todos[idx].completed = !todos[idx].completed;
@@ -46,6 +52,7 @@ app.post("/toggle/:index", (req, res) => {
   res.redirect("/");
 });
 
+// Delete task
 app.delete("/delete/:index", (req, res) => {
   const idx = parseInt(req.params.index);
   if (!isNaN(idx)) {

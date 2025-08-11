@@ -5,45 +5,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Todo List</title>
   <link rel="stylesheet" href="/css/styles.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
   <div class="card">
     <h1>Todo List</h1>
 
+    <!-- Add Task -->
     <form class="add-form" action="/add" method="POST">
       <input type="text" name="task" placeholder="Enter a task..." required />
-      <button type="submit">+</button>
+      <button type="submit" title="Add Task">+</button>
     </form>
 
+    <!-- Task List -->
     <ul class="todo-list">
       <% todos.forEach((todo, index) => { %>
-  <div class="task-item <%= todo.completed ? 'completed' : '' %>">
-    
-    <% if (todo.editing) { %>
-      <form action="/update/<%= index %>" method="POST" class="edit-form">
-        <input type="text" name="updatedTask" value="<%= todo.task %>" required />
-        <button type="submit" title="Save"><i class="fas fa-save"></i></button>
-      </form>
-    <% } else { %>
-      <form action="/toggle/<%= index %>" method="POST" class="toggle-form">
-        <button type="submit" title="Toggle Done"><i class="fas fa-check"></i></button>
-      </form>
+        <div class="task-item <%= todo.completed ? 'completed' : '' %>">
 
-      <span class="task-text"><%= todo.task %></span>
+          <% if (todo.editing) { %>
+            <!-- Edit Mode -->
+            <form action="/update/<%= index %>?_method=PUT" method="POST" class="edit-form">
+              <input type="text" name="updatedTask" value="<%= todo.task %>" required />
+              <button type="submit" title="Save"><i class="fas fa-save"></i></button>
+            </form>
+          <% } else { %>
+            <!-- Toggle Complete -->
+            <form action="/toggle/<%= index %>?_method=PATCH" method="POST" class="toggle-form">
+              <button type="submit" title="Toggle Done">
+                <i class="fas fa-check"></i>
+              </button>
+            </form>
 
-      <form action="/edit/<%= index %>" method="POST" class="edit-button-form">
-        <button type="submit" title="Edit"><i class="fas fa-pen"></i></button>
-      </form>
-    <% } %>
+            <!-- Task Text -->
+            <span class="task-text"><%= todo.task %></span>
 
-    <form action="/delete/<%= index %>?_method=DELETE" method="POST" class="delete-form">
-      <button type="submit" title="Delete"><i class="fas fa-trash"></i></button>
-    </form>
-  </div>
-<% }); %>
+            <!-- Edit Button -->
+            <form action="/edit/<%= index %>" method="GET" class="edit-button-form">
+              <button type="submit" title="Edit">
+                <i class="fas fa-pen"></i>
+              </button>
+            </form>
+          <% } %>
 
+          <!-- Delete Task -->
+          <form action="/delete/<%= index %>?_method=DELETE" method="POST" class="delete-form">
+            <button type="submit" title="Delete">
+              <i class="fas fa-trash"></i>
+            </button>
+          </form>
+        </div>
+      <% }); %>
     </ul>
   </div>
 </body>

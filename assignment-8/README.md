@@ -22,9 +22,8 @@ MERN-Assignments/
 
 ## 🚀 Live Demo
 
-👉 [Insert Deployment Link Here]  
+👉 https://sk-mern-assignment-8.onrender.com  
 
-*(Example: https://mern-assignment8-schoollisting.onrender.com)*
 
 
 ## ✨ Features

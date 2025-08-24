@@ -5,28 +5,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Todo List</title>
   <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
   <div class="card">
     <h1>Todo List</h1>
 
+    <!-- Add Task -->
     <form class="add-form" action="/add" method="POST">
       <input type="text" name="task" placeholder="Enter a task..." required />
-      <button type="submit">+</button>
+      <button type="submit" title="Add Task">+</button>
     </form>
 
+    <!-- Task List -->
     <ul class="todo-list">
       <% todos.forEach((todo, index) => { %>
-        <li class="<%= todo.completed ? 'done' : '' %>">
-          <form action="/toggle/<%= index %>" method="POST">
-            <input type="checkbox" onchange="this.form.submit()" <%= todo.completed ? 'checked' : '' %> />
-            <span><%= todo.task %></span>
+        <div class="task-item <%= todo.completed ? 'completed' : '' %>">
+
+          <% if (todo.editing) { %>
+            <!-- Edit Mode -->
+            <form action="/update/<%= index %>?_method=PUT" method="POST" class="edit-form">
+              <input type="text" name="updatedTask" value="<%= todo.task %>" required />
+              <button type="submit" title="Save"><i class="fas fa-save"></i></button>
+            </form>
+          <% } else { %>
+            <!-- Toggle Complete -->
+            <form action="/toggle/<%= index %>?_method=PATCH" method="POST" class="toggle-form">
+              <button type="submit" title="Toggle Done">
+                <i class="fas fa-check"></i>
+              </button>
+            </form>
+
+            <!-- Task Text -->
+            <span class="task-text"><%= todo.task %></span>
+
+            <!-- Edit Button -->
+            <form action="/edit/<%= index %>" method="GET" class="edit-button-form">
+              <button type="submit" title="Edit">
+                <i class="fas fa-pen"></i>
+              </button>
+            </form>
+          <% } %>
+
+          <!-- Delete Task -->
+          <form action="/delete/<%= index %>?_method=DELETE" method="POST" class="delete-form">
+            <button type="submit" title="Delete">
+              <i class="fas fa-trash"></i>
+            </button>
           </form>
-          <form action="/delete/<%= index %>?_method=DELETE" method="POST">
-            <button class="delete-btn" title="Delete Task">✕</button>
-          </form>
-        </li>
-      <% }) %>
+        </div>
+      <% }); %>
     </ul>
   </div>
 </body>

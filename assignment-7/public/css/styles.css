@@ -66,6 +66,22 @@ h1 {
   background: var(--accent-dark);
 }
 
+.edit-form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.edit-form input {
+  flex: 1;
+  padding: 0.4rem;
+  font-size: 1rem;
+}
+
+.inline-form {
+  display: inline;
+}
+
+
 .todo-list {
   list-style: none;
   padding: 0;
@@ -97,6 +113,24 @@ h1 {
 .todo-list input[type="checkbox"] {
   transform: scale(1.2);
   accent-color: var(--accent);
+  cursor: pointer;
+}
+.completed .task-text {
+  text-decoration: line-through;
+  color: grey;
+}
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+form {
+  display: inline;
+}
+button {
+  background: none;
+  border: none;
   cursor: pointer;
 }
 

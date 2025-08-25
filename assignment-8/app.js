@@ -1,4 +1,4 @@
-// App.js
+// app.js
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
@@ -8,9 +8,17 @@ const methodOverride = require('method-override');
 const app = express();
 
 // ---------- DB ----------
-mongoose.connect("mongodb://127.0.0.1:27017/todoApp")
-.then(() => console.log("✅ Connected to MongoDB locally"))
-.catch((err) => console.error("❌ MongoDB connection error:", err));
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => console.log("✅ Connected to MongoDB Atlas"))
+  .catch((err) => console.error("❌ MongoDB connection error:", err));
+
+// ✅ helper for flash-like alerts using query params
+function withAlert(res, redirectTo, msg, type = 'success') {
+  const url = new URL(redirectTo, 'http://dummy'); // safe dummy base
+  url.searchParams.set('msg', msg);
+  url.searchParams.set('type', type);
+  return res.redirect(url.pathname + url.search);
+}
 
 // ---------- Model ----------
 const taskSchema = new mongoose.Schema(
@@ -19,7 +27,7 @@ const taskSchema = new mongoose.Schema(
     priority: { type: String, enum: ["low", "high", "urgent"], default: "low" },
     completed: { type: Boolean, default: false }
   },
-  { timestamps: true } // ✅ adds createdAt & updatedAt
+  { timestamps: true }
 );
 
 const Task = mongoose.model("Task", taskSchema);
@@ -32,24 +40,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ✅ helper for flash-like alerts using query params
-function withAlert(res, redirectTo, msg, type = 'success') {
-  const url = new URL(redirectTo, 'http://localhost'); // dummy base
-  url.searchParams.set('msg', msg);
-  url.searchParams.set('type', type);
-  return res.redirect(url.pathname + url.search);
-}
-
 // ---------- Routes ----------
-
-// GET Home - list all tasks
 app.get('/', async (req, res) => {
   const { msg, type, edit } = req.query;
   const tasks = await Task.find().sort({ createdAt: -1 });
   res.render('list', { tasks, msg, type, edit });
 });
 
-// POST Create task
 app.post('/tasks', async (req, res) => {
   const { title, priority } = req.body;
   if (!title || !title.trim()) {
@@ -60,7 +57,6 @@ app.post('/tasks', async (req, res) => {
   return withAlert(res, '/', 'Task added successfully.');
 });
 
-// PATCH Toggle complete
 app.patch('/tasks/:id/toggle', async (req, res) => {
   const { id } = req.params;
   const task = await Task.findById(id);
@@ -70,13 +66,11 @@ app.patch('/tasks/:id/toggle', async (req, res) => {
   return withAlert(res, '/', task.completed ? 'Marked as completed.' : 'Marked as pending.');
 });
 
-// GET enable edit mode
 app.get('/tasks/:id/edit', (req, res) => {
   const { id } = req.params;
   return res.redirect(`/?edit=${id}`);
 });
 
-// PUT Update task
 app.put('/tasks/:id', async (req, res) => {
   const { id } = req.params;
   const { updatedTitle, updatedPriority } = req.body;
@@ -97,7 +91,6 @@ app.put('/tasks/:id', async (req, res) => {
   return withAlert(res, '/', 'Task updated successfully.');
 });
 
-// DELETE Remove task
 app.delete('/tasks/:id', async (req, res) => {
   const { id } = req.params;
   const task = await Task.findByIdAndDelete(id);
@@ -108,5 +101,5 @@ app.delete('/tasks/:id', async (req, res) => {
 // ---------- Server ----------
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });

@@ -10,38 +10,31 @@
 <body>
   <div class="card">
     <h1>Todo List</h1>
-
-    <form class="add-form" action="/add" method="POST">
+    <form class="add-form" action="/" method="POST">
       <input type="text" name="task" placeholder="Enter a task..." required />
       <button type="submit" title="Add Task">+</button>
     </form>
 
     <ul class="todo-list">
-      <% todos.forEach((todo, index) => { %>
+      <% newlistitems.forEach(function(todo) { %>
         <div class="task-item <%= todo.completed ? 'completed' : '' %>">
-
+          <form action="/complete/<%= todo._id %>" method="POST" style="display:inline;">
+            <input type="checkbox" name="completed" onchange="this.form.submit()" <%= todo.completed ? 'checked' : '' %> />
+          </form>
+          <span class="task-text"><%= todo.name %></span>
           <% if (todo.editing) { %>
-            <form action="/update/<%= index %>?_method=PUT" method="POST" class="edit-form">
-              <input type="text" name="updatedTask" value="<%= todo.task %>" required />
+            <form action="/update/<%= todo._id %>?_method=PUT" method="POST" class="edit-form">
+              <input type="text" name="updatedTask" value="<%= todo.name %>" required />
               <button type="submit" title="Save"><i class="fas fa-save"></i></button>
             </form>
           <% } else { %>
-            <form action="/toggle/<%= index %>?_method=PATCH" method="POST" class="toggle-form">
-              <button type="submit" title="Toggle Done">
-                <i class="fas fa-check"></i>
-              </button>
-            </form>
-
-            <span class="task-text"><%= todo.task %></span>
-
-            <form action="/edit/<%= index %>" method="GET" class="edit-button-form">
+            <form action="/edit/<%= todo._id %>" method="GET" class="edit-button-form">
               <button type="submit" title="Edit">
                 <i class="fas fa-pen"></i>
               </button>
             </form>
           <% } %>
-
-          <form action="/delete/<%= index %>?_method=DELETE" method="POST" class="delete-form">
+          <form action="/delete/<%= todo._id %>?_method=DELETE" method="POST" class="delete-form">
             <button type="submit" title="Delete">
               <i class="fas fa-trash"></i>
             </button>

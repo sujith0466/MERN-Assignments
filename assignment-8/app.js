@@ -1,105 +1,99 @@
-// app.js
-require('dotenv').config();
-const express = require('express');
-const path = require('path');
-const mongoose = require('mongoose');
-const methodOverride = require('method-override');
+const express = require("express");
+const bodyParser = require("body-parser");
+const methodOverride = require("method-override");
+var app = express();
+app.set("view engine", "ejs");
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public"));
+app.use(methodOverride("_method"));
 
-const app = express();
-
-// ---------- DB ----------
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log("✅ Connected to MongoDB Atlas"))
-  .catch((err) => console.error("❌ MongoDB connection error:", err));
-
-// ✅ helper for flash-like alerts using query params
-function withAlert(res, redirectTo, msg, type = 'success') {
-  const url = new URL(redirectTo, 'http://dummy'); // safe dummy base
-  url.searchParams.set('msg', msg);
-  url.searchParams.set('type', type);
-  return res.redirect(url.pathname + url.search);
-}
-
-// ---------- Model ----------
-const taskSchema = new mongoose.Schema(
-  {
-    title: { type: String, required: true },
-    priority: { type: String, enum: ["low", "high", "urgent"], default: "low" },
-    completed: { type: Boolean, default: false }
+const mongoose = require("mongoose");
+mongoose.connect("mongodb://localhost:27017/todo");
+const tryschema = new mongoose.Schema({
+  name: String,
+  completed: {
+    type: Boolean,
+    default: false,
   },
-  { timestamps: true }
-);
-
-const Task = mongoose.model("Task", taskSchema);
-
-// ---------- App Setup ----------
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-
-app.use(express.urlencoded({ extended: true }));
-app.use(methodOverride('_method'));
-app.use(express.static(path.join(__dirname, 'public')));
-
-// ---------- Routes ----------
-app.get('/', async (req, res) => {
-  const { msg, type, edit } = req.query;
-  const tasks = await Task.find().sort({ createdAt: -1 });
-  res.render('list', { tasks, msg, type, edit });
+});
+const item = mongoose.model("task", tryschema);
+const todo = new item({
+  name: "Create some photos",
+  completed: false,
+});
+const todo2 = new item({
+  name: "Make a video",
+  completed: false,
+});
+const todo3 = new item({
+  name: "Go to the movie",
+  completed: false,
 });
 
-app.post('/tasks', async (req, res) => {
-  const { title, priority } = req.body;
-  if (!title || !title.trim()) {
-    return withAlert(res, '/', 'Task title cannot be empty.', 'error');
+//todo.save();
+//todo2.save();
+//todo3.save();
+app.get("/", async function (req, res) {
+  try {
+    const founditems = await item.find({});
+    let itemsWithEdit = founditems.map((doc) => {
+      let obj = doc.toObject();
+      obj.editing = req.query.editId && req.query.editId == doc._id.toString();
+      return obj;
+    });
+    res.render("list", { newlistitems: itemsWithEdit });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Database error");
   }
-  const safePriority = ['low', 'high', 'urgent'].includes(priority) ? priority : 'low';
-  await Task.create({ title: title.trim(), priority: safePriority });
-  return withAlert(res, '/', 'Task added successfully.');
+});
+app.get("/edit/:id", async function (req, res) {
+  res.redirect("/?editId=" + req.params.id);
 });
 
-app.patch('/tasks/:id/toggle', async (req, res) => {
-  const { id } = req.params;
-  const task = await Task.findById(id);
-  if (!task) return withAlert(res, '/', 'Task not found.', 'error');
-  task.completed = !task.completed;
-  await task.save();
-  return withAlert(res, '/', task.completed ? 'Marked as completed.' : 'Marked as pending.');
-});
-
-app.get('/tasks/:id/edit', (req, res) => {
-  const { id } = req.params;
-  return res.redirect(`/?edit=${id}`);
-});
-
-app.put('/tasks/:id', async (req, res) => {
-  const { id } = req.params;
-  const { updatedTitle, updatedPriority } = req.body;
-  const task = await Task.findById(id);
-  if (!task) return withAlert(res, '/', 'Task not found.', 'error');
-
-  if (!updatedTitle || !updatedTitle.trim()) {
-    return withAlert(res, `/?edit=${id}`, 'Updated title cannot be empty.', 'error');
+app.put("/update/:id", async function (req, res) {
+  try {
+    await item.findByIdAndUpdate(req.params.id, { name: req.body.updatedTask });
+    res.redirect("/");
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Error updating task");
   }
-  const safePriority = ['low', 'high', 'urgent'].includes(updatedPriority)
-    ? updatedPriority
-    : task.priority;
-
-  task.title = updatedTitle.trim();
-  task.priority = safePriority;
-  await task.save();
-
-  return withAlert(res, '/', 'Task updated successfully.');
 });
 
-app.delete('/tasks/:id', async (req, res) => {
-  const { id } = req.params;
-  const task = await Task.findByIdAndDelete(id);
-  if (!task) return withAlert(res, '/', 'Task not found.', 'error');
-  return withAlert(res, '/', 'Task deleted successfully.');
+app.delete("/delete/:id", async function (req, res) {
+  try {
+    await item.findByIdAndDelete(req.params.id);
+    res.redirect("/");
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Error deleting task");
+  }
+});
+app.post("/", function (req, res) {
+  const itemname = req.body.task;
+  const todo4 = new item({
+    name: itemname,
+    completed: false,
+  });
+  todo4.save();
+  res.redirect("/");
 });
 
-// ---------- Server ----------
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+app.post("/complete/:id", async function (req, res) {
+  try {
+    const task = await item.findById(req.params.id);
+    if (task) {
+      task.completed = !task.completed;
+      await task.save();
+    }
+    res.redirect("/");
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Error updating task");
+  }
+});
+
+app.listen(8000, function () {
+  console.log("Server started");
 });

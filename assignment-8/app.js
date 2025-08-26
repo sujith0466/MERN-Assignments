@@ -8,7 +8,8 @@ app.use(express.static("public"));
 app.use(methodOverride("_method"));
 
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/todo");
+const mongoURI = process.env.MONGODB_URI || "mongodb://localhost:27017/todo";
+mongoose.connect(mongoURI);
 const tryschema = new mongoose.Schema({
   name: String,
   completed: {

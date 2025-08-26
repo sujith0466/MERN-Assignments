@@ -1,83 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Todo List</title>
-  <link rel="stylesheet" href="/css/styles.css"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
-  <main class="shell">
-    <section class="card">
-      <h1>To-Do List</h1>
+  <div class="card">
+    <h1>Todo List</h1>
 
-      <% if (msg) { %>
-        <div class="alert <%= (type === 'error') ? 'alert-error' : 'alert-success' %>">
-          <%= msg %>
+    <form class="add-form" action="/add" method="POST">
+      <input type="text" name="task" placeholder="Enter a task..." required />
+      <button type="submit" title="Add Task">+</button>
+    </form>
+
+    <ul class="todo-list">
+      <% todos.forEach((todo, index) => { %>
+        <div class="task-item <%= todo.completed ? 'completed' : '' %>">
+
+          <% if (todo.editing) { %>
+            <form action="/update/<%= index %>?_method=PUT" method="POST" class="edit-form">
+              <input type="text" name="updatedTask" value="<%= todo.task %>" required />
+              <button type="submit" title="Save"><i class="fas fa-save"></i></button>
+            </form>
+          <% } else { %>
+            <form action="/toggle/<%= index %>?_method=PATCH" method="POST" class="toggle-form">
+              <button type="submit" title="Toggle Done">
+                <i class="fas fa-check"></i>
+              </button>
+            </form>
+
+            <span class="task-text"><%= todo.task %></span>
+
+            <form action="/edit/<%= index %>" method="GET" class="edit-button-form">
+              <button type="submit" title="Edit">
+                <i class="fas fa-pen"></i>
+              </button>
+            </form>
+          <% } %>
+
+          <form action="/delete/<%= index %>?_method=DELETE" method="POST" class="delete-form">
+            <button type="submit" title="Delete">
+              <i class="fas fa-trash"></i>
+            </button>
+          </form>
         </div>
-      <% } %>
-
-      <!-- Add Task -->
-      <form class="add-form" action="/tasks" method="POST">
-        <input type="text" name="title" placeholder="What do you need to do?" required />
-        <select name="priority" aria-label="Choose priority">
-          <option value="low">Low</option>
-          <option value="high">High</option>
-          <option value="urgent">Urgent</option>
-        </select>
-        <button type="submit" title="Add Task" class="add-btn">+</button>
-      </form>
-
-      <!-- Tasks -->
-      <ul class="todo-list">
-        <% tasks.forEach(task => { %>
-          <li class="task <%= task.completed ? 'completed' : '' %>">
-            <!-- Toggle -->
-            <form class="inline" action="/tasks/<%= task._id %>/toggle?_method=PATCH" method="POST">
-              <button class="icon-btn" title="Toggle Complete">
-                <i class="fa-solid fa-check"></i>
-              </button>
-            </form>
-
-            <% if (edit && String(edit) === String(task._id)) { %>
-              <!-- EDIT MODE -->
-              <form class="task-edit inline-grow" action="/tasks/<%= task._id %>?_method=PUT" method="POST">
-                <input type="text" name="updatedTitle" value="<%- task.title %>" required />
-                <select name="updatedPriority">
-                  <option value="low" <%= task.priority==='low' ? 'selected' : '' %>>Low</option>
-                  <option value="high" <%= task.priority==='high' ? 'selected' : '' %>>High</option>
-                  <option value="urgent" <%= task.priority==='urgent' ? 'selected' : '' %>>Urgent</option>
-                </select>
-                <button class="icon-btn" title="Save">
-                  <i class="fa-solid fa-floppy-disk"></i>
-                </button>
-              </form>
-              <a class="icon-btn link-btn" href="/" title="Cancel">
-                <i class="fa-solid fa-xmark"></i>
-              </a>
-            <% } else { %>
-              <!-- READ MODE -->
-              <div class="task-main inline-grow">
-                <span class="title"><%- task.title %></span>
-                <span class="badge <%= task.priority %>"><%= task.priority %></span>
-              </div>
-              <a class="icon-btn link-btn" href="/tasks/<%= task._id %>/edit" title="Edit">
-                <i class="fa-solid fa-pen"></i>
-              </a>
-            <% } %>
-
-            <!-- Delete -->
-            <form class="inline" action="/tasks/<%= task._id %>?_method=DELETE" method="POST"
-                  onsubmit="return confirm('Delete this task?');">
-              <button class="icon-btn danger" title="Delete">
-                <i class="fa-solid fa-trash"></i>
-              </button>
-            </form>
-          </li>
-        <% }) %>
-      </ul>
-    </section>
-  </main>
+      <% }); %>
+    </ul>
+  </div>
 </body>
 </html>

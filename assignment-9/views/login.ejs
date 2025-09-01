@@ -1,0 +1,28 @@
+<%- include('partials/header') %>
+<h2>Login</h2>
+<div class="row">
+  <div class="col-sm-8">
+    <div class="card">
+      <div class="card-body">
+        <form action="/login" method="POST">
+          <label for="email">Email:</label>
+          <input type="email" name="email" placeholder="Email" required>
+
+          <label for="password">Password:</label>
+          <input type="password" id="logPass" name="password" placeholder="Password" required>
+          <label style="display:inline-block; margin:8px 0;">
+          <input type="checkbox" onclick="togglePassword('logPass')"> Show Password
+            </label>
+          <button type="submit">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('partials/footer') %>
+<script>
+  function togglePassword(id) {
+    const input = document.getElementById(id);
+    input.type = input.type === "password" ? "text" : "password";
+  }
+</script>

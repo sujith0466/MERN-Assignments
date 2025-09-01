@@ -12,7 +12,8 @@ app.use(express.static('public'));
 app.set("view engine", "ejs");
 app.use(cookieParser());
 
-mongoose.connect("mongodb://localhost:27017/secrets");
+const mongoURI = process.env.MONGODB_URI || "mongodb://localhost:27017/secrets";
+mongoose.connect(mongoURI);
 
 const userSchema = new mongoose.Schema({
   name: String,

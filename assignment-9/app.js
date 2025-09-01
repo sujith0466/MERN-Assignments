@@ -12,7 +12,7 @@ app.use(express.static('public'));
 app.set("view engine", "ejs");
 app.use(cookieParser());
 
-const mongoURI = process.env.MONGODB_URI || "mongodb://localhost:27017/secrets";
+const mongoURI = process.env.MONGODB_URI || "mongodb://localhost:27017/secretsdb";
 mongoose.connect(mongoURI);
 
 const userSchema = new mongoose.Schema({

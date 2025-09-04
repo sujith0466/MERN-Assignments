@@ -40,31 +40,34 @@ app.post("/register", function(req, res) {
     email: req.body.email,
     password: req.body.password
   });
-  newUser.save()
-    .then(() => {
-      res.render("secrets");
-    })
-    .catch(err => {
+
+  newUser.save(function(err) {
+    if (err) {
       console.log(err);
-    });
+    } else {
+      res.render("secrets");
+    }
+  });
 });
 
 app.post("/login", function(req, res) {
   const username = req.body.email;
   const password = req.body.password;
 
-  User.findOne({ email: username })
-    .then(foundUser => {
+  User.findOne({ email: username }, function(err, foundUser) {
+    if (err) {
+      console.log(err);
+    } 
+    else {
       if (foundUser) {
         if (foundUser.password === password) {
           res.render("secrets");
-        }
-      }
-    })
-    .catch(err => {
-      console.log(err);
-    });
+        } 
+      } 
+    }
+  });
 });
+
 
 app.listen(8000, function() {
   console.log("server started on port 8000");

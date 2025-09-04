@@ -1,60 +1,71 @@
 const express = require("express");
 const mongoose = require("mongoose");
-
+const encrypt = require("mongoose-encryption");
 const app = express();
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+
 const mongoURI = process.env.MONGODB_URI || "mongodb://localhost:27017/secretsDB";
-mongoose.connect(mongoURI);
+mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const userSchema = new mongoose.Schema({
   email: String,
-  password: String
+  password: String,
+  
 });
+
+
+const secret="thisislittlesecret.";
+userSchema.plugin(encrypt, {secret: secret, encryptedFields: ['password']});
 
 const User = mongoose.model("User", userSchema);
 
-app.get("/", (req, res) => {
+app.get("/", function(req, res){
   res.render("home");
 });
 
-app.get("/login", (req, res) => {
+app.get("/login", function(req, res){
   res.render("login");
 });
 
-app.get("/register", (req, res) => {
+app.get("/register", function(req, res){
   res.render("register");
 });
 
-app.post("/register", (req, res) => {
+app.post("/register", function(req, res) {
   const newUser = new User({
-    email: req.body.username,
+    email: req.body.email,
     password: req.body.password
   });
   newUser.save()
-    .then(() => res.render("secrets"))
-    .catch(err => console.log(err));
+    .then(() => {
+      res.render("secrets");
+    })
+    .catch(err => {
+      console.log(err);
+    });
 });
 
-app.post("/login", (req, res) => {
-  const username = req.body.username;
+app.post("/login", function(req, res) {
+  const username = req.body.email;
   const password = req.body.password;
 
   User.findOne({ email: username })
     .then(foundUser => {
-      if (foundUser && foundUser.password === password) {
-        res.render("secrets");
-      } else {
-        res.send("Invalid credentials");
+      if (foundUser) {
+        if (foundUser.password === password) {
+          res.render("secrets");
+        }
       }
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      console.log(err);
+    });
 });
 
-const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => {
-  console.log(`server started on port ${PORT}`);
+app.listen(8000, function() {
+  console.log("server started on port 8000");
 });

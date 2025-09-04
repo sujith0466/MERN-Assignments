@@ -9,7 +9,7 @@ app.use(express.static("public"));
 
 
 const mongoURI = process.env.MONGODB_URI || "mongodb://localhost:27017/secretsDB";
-mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(mongoURI);
 
 const userSchema = new mongoose.Schema({
   email: String,

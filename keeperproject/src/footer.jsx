@@ -6,6 +6,6 @@ function Footer() {
         <footer className="footer">
             <p>CopyRight@2025</p>
         </footer>
-    )
+    );
 }
 export default Footer;

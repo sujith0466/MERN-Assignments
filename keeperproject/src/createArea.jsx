@@ -1,29 +1,26 @@
 import React,{useState} from "react";
 
-function createArea(note) {
+function CreateArea(props) {
     const [note, setNote] = useState({
         title:"",
         content:""
     });
 
 
-    function handleChange(event){
-        const {name,value} = event.target;
-        
-        setNote(prevNote=>{
-            return{
-                ...prevNote,
-                [name]:value
-        }
-    });
+    function handleChange(event) {
+    const { name, value } = event.target;
+    setNote(prevNote => ({
+      ...prevNote,
+      [name]: value
+    }));
 }
     function submitNote(event){
+        event.preventDefault()
         props.onAdd(note);
         setNote({
             title:"",
             content:""
         });
-        event.preventDefault()
     }
     return(
         <div>
@@ -45,4 +42,4 @@ function createArea(note) {
     );
 }
 
-export default createArea;
+export default CreateArea;
